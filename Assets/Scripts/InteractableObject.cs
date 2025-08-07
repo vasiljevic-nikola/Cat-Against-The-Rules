@@ -4,50 +4,62 @@ public class InteractableObject : MonoBehaviour
 {
     public enum ObjectType { Book, Lamp, Laptop }
     public ObjectType type;
-    public bool isDangerous;
 
-    private bool isCleared = false;
     private GameManager gameManager;
+    private bool taskCompleted = false;
 
     void Start()
     {
+        // Pronađi GameManager-a na početku
         gameManager = FindFirstObjectByType<GameManager>();
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (isDangerous && collision.gameObject.CompareTag("Player"))
+        if (gameManager == null)
         {
-            gameManager.GameOver();
-        }
-
-        if (!isDangerous && collision.gameObject.CompareTag("Floor"))
-        {
-            HandleTaskCompletion();
+            Debug.LogError("FATAL ERROR: GameManager not found in the scene!");
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.CompareTag("KillZone"))
+        // Ako je zadatak već izvršen, ne radi ništa
+        if (taskCompleted) return;
+
+        // Provera da li je objekat udario u pod (za zadatke)
+        if (type == ObjectType.Book || type == ObjectType.Lamp)
         {
-            if (!isDangerous)
+            if (collision.gameObject.CompareTag("Floor"))
             {
                 HandleTaskCompletion();
             }
-            else
+        }
+        // Provera da li je igrač udario u laptop (za neuspeh)
+        else if (type == ObjectType.Laptop)
+        {
+            if (collision.gameObject.CompareTag("Player"))
             {
-                Destroy(gameObject);
+                HandleGameOver();
             }
         }
     }
 
     void HandleTaskCompletion()
     {
-        if (isCleared) return;
-        isCleared = true;
+        taskCompleted = true;
+        if (gameManager != null)
+        {
+            gameManager.CompleteTask(type);
+        }
 
-        gameManager.CompleteTask(type);
-        gameObject.SetActive(false);
+        // Opciono: Onemogući dalje sudare za ovaj objekat
+        // GetComponent<Collider2D>().enabled = false;
+    }
+
+    void HandleGameOver()
+    {
+        taskCompleted = true; // Označi da je interakcija sa ovim objektom gotova
+        if (gameManager != null)
+        {
+            gameManager.GameOver();
+        }
     }
 }
