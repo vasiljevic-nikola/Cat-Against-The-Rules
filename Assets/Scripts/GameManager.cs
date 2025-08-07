@@ -4,32 +4,41 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    // Reference na UI elemente
+    // --- Reference na UI elemente ---
+    [Header("Task UI")] // Zaglavlja za bolju organizaciju u Inspector-u
     public TMP_Text taskBooksText;
     public TMP_Text taskLampText;
     public TMP_Text taskLaptopText;
 
-    // Statusi zadataka
+    [Header("End Screen UI")]
+    public GameObject gameOverScreen; // Koristimo GameObject da možemo da ga palimo/gasimo
+    public GameObject levelCompleteScreen;
+
+    // --- Statusi zadataka ---
     private bool booksTaskComplete = false;
     private bool lampTaskComplete = false;
     private bool isGameOver = false;
 
-    // Originalni tekstovi zadataka
+    // --- Originalni tekstovi zadataka ---
     private string booksTaskString = "Knock down the books";
     private string lampTaskString = "Knock down the lamp";
     private string laptopTaskString = "Don't touch the laptop";
 
     void Start()
     {
+        // Osiguraj da su ekrani ugašeni na početku
+        gameOverScreen.SetActive(false);
+        levelCompleteScreen.SetActive(false);
+
+        // Resetuj vreme ako je prethodno bilo zaustavljeno
+        Time.timeScale = 1f;
+
         UpdateUI();
     }
 
-    // Poziva se iz InteractableObject skripte
     public void CompleteTask(InteractableObject.ObjectType type)
     {
         if (isGameOver) return;
-
-        Debug.Log("GameManager.CompleteTask CALLED with type: " + type.ToString());
 
         if (type == InteractableObject.ObjectType.Book)
         {
@@ -48,51 +57,32 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-        Debug.Log("GAME OVER! You touched the forbidden object!");
         isGameOver = true;
+        gameOverScreen.SetActive(true); // Prikaži GAME OVER ekran
         Time.timeScale = 0f; // Zamrzni igru
-        UpdateUI();
+        UpdateUI(); // Ažuriraj status laptopa na FAILED
     }
 
     private void UpdateUI()
     {
-        // Ažuriraj tekst za knjige
-        if (booksTaskComplete)
-        {
-            taskBooksText.text = booksTaskString + " (DONE)";
-        }
-        else
-        {
-            taskBooksText.text = booksTaskString;
-        }
-
-        // Ažuriraj tekst za lampu
-        if (lampTaskComplete)
-        {
-            taskLampText.text = lampTaskString + " (DONE)";
-        }
-        else
-        {
-            taskLampText.text = lampTaskString;
-        }
-
-        // Ažuriraj tekst za laptop
         if (isGameOver)
         {
+            // Ako je kraj igre, ne ažuriraj ništa osim eventualno finalnog statusa
             taskLaptopText.text = laptopTaskString + " (FAILED!)";
+            return;
         }
-        else
-        {
-            taskLaptopText.text = laptopTaskString;
-        }
+
+        taskBooksText.text = booksTaskComplete ? booksTaskString + " (DONE)" : booksTaskString;
+        taskLampText.text = lampTaskComplete ? lampTaskString + " (DONE)" : lampTaskString;
+        taskLaptopText.text = laptopTaskString;
     }
 
     private void CheckForWin()
     {
         if (booksTaskComplete && lampTaskComplete)
         {
-            Debug.Log("LEVEL COMPLETE! You are a master of chaos!");
             isGameOver = true;
+            levelCompleteScreen.SetActive(true); // Prikaži LEVEL COMPLETE ekran
             Time.timeScale = 0f; // Zamrzni igru
         }
     }
