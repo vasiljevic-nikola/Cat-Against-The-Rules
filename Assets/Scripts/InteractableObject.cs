@@ -2,7 +2,7 @@
 
 public class InteractableObject : MonoBehaviour
 {
-    public enum ObjectType { Book, Lamp, Laptop }
+    public enum ObjectType { Book, Lamp, Laptop, Key, Pillow }
     public ObjectType type;
 
     private GameManager gameManager;
@@ -62,4 +62,19 @@ public class InteractableObject : MonoBehaviour
             gameManager.GameOver();
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // Proveravamo da li je OVAJ objekat (na kojem je skripta) jastuk
+        // i da li je objekat koji je ušao u njega ključ.
+        if (type == ObjectType.Pillow && other.CompareTag("Key"))
+        {
+            // Ako je zadatak već izvršen, ne radi ništa
+            if (taskCompleted) return;
+
+            Debug.Log("Key has touched the pillow!");
+            HandleTaskCompletion();
+        }
+    }
+
 }
