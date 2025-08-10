@@ -2,7 +2,7 @@
 
 public class InteractableObject : MonoBehaviour
 {
-    public enum ObjectType { Book, Lamp, Laptop, Key, Pillow, Armchair }
+    public enum ObjectType { Book, Lamp, Laptop, Key, Pillow, Armchair, Stove, CoffeMachine, Blender }
     public ObjectType type;
 
     private GameManager level1Manager;
