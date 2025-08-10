@@ -2,22 +2,37 @@
 
 public class InteractableObject : MonoBehaviour
 {
-    public enum ObjectType { Book, Lamp, Laptop, Key, Pillow, Armchair, Stove, CoffeMachine, Blender }
+    public enum ObjectType
+    {
+        Book,
+        Lamp,
+        Laptop,
+        Key,
+        Pillow,
+        Armchair,
+        Stove,
+        CoffeeMachine,
+        Blender
+    }
+
     public ObjectType type;
 
     private GameManager level1Manager;
     private GameManager_Level2 level2Manager;
+    private GameManager_Level3 level3Manager;
+
     private bool taskCompleted = false;
 
     void Start()
     {
-        // Pokušaj da pronađe oba, koristiće onaj koji nije null
+        // Pronađi sve GameManagere koji mogu biti aktivni
         level1Manager = FindFirstObjectByType<GameManager>();
         level2Manager = FindFirstObjectByType<GameManager_Level2>();
+        level3Manager = FindFirstObjectByType<GameManager_Level3>();
 
-        if (level1Manager == null && level2Manager == null)
+        if (level1Manager == null && level2Manager == null && level3Manager == null)
         {
-            Debug.LogError("FATAL ERROR: Neither GameManager (Level 1) nor GameManager_Level2 (Level 2) found!");
+            Debug.LogError("FATAL ERROR: No GameManager was found in the scene!");
         }
     }
 
@@ -25,16 +40,16 @@ public class InteractableObject : MonoBehaviour
     {
         if (taskCompleted) return;
 
-        // Logika za Nivo 1
+        // ===== Level 1 =====
         if (level1Manager != null)
         {
-            // AKO JE OBJEKAT LAPTOP I SUDARI SE SA IGRAČEM -> GAME OVER
+            // Laptop -> Game Over (ako igrač udari)
             if (type == ObjectType.Laptop && collision.gameObject.CompareTag("Player"))
             {
                 taskCompleted = true;
                 level1Manager.GameOver(ObjectType.Laptop);
             }
-            // AKO JE OBJEKAT KNJIGA ILI LAMPA I SUDARI SE SA PODOM -> ZADATAK ZAVRŠEN
+            // Knjiga ili lampa -> CompleteTask (ako padne na pod)
             else if ((type == ObjectType.Book || type == ObjectType.Lamp) && collision.gameObject.CompareTag("Floor"))
             {
                 taskCompleted = true;
@@ -42,13 +57,31 @@ public class InteractableObject : MonoBehaviour
             }
         }
 
-        // Logika za Nivo 2
+        // ===== Level 2 =====
         if (level2Manager != null)
         {
+            // Fotelja -> Game Over (ako igrač udari)
             if (type == ObjectType.Armchair && collision.gameObject.CompareTag("Player"))
             {
                 taskCompleted = true;
                 level2Manager.GameOver();
+            }
+        }
+
+        // ===== Level 3 =====
+        if (level3Manager != null)
+        {
+            // Blender ili aparat za kafu -> CompleteTask (ako padne na pod)
+            if ((type == ObjectType.Blender || type == ObjectType.CoffeeMachine) && collision.gameObject.CompareTag("Floor"))
+            {
+                taskCompleted = true;
+                level3Manager.CompleteTask(type);
+            }
+            // Rerna -> Game Over (ako igrač udari)
+            else if (type == ObjectType.Stove && collision.gameObject.CompareTag("Player"))
+            {
+                taskCompleted = true;
+                level3Manager.GameOver(type);
             }
         }
     }
@@ -57,7 +90,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (taskCompleted) return;
 
-        // Logika za Nivo 2 
+        // ===== Level 2 - Key Task =====
         if (level2Manager != null)
         {
             if (type == ObjectType.Key && other.CompareTag("PillowZone"))
