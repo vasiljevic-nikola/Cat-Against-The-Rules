@@ -2,16 +2,26 @@
 
 public class WinTrigger : MonoBehaviour
 {
-    void OnTriggerEnter2D(Collider2D other)
+    private GameManager_Level2 gameManager;
+
+    private void Start()
     {
-        // Proverava da li je igrač (mačka) prošao kroz trigger
+        gameManager = FindFirstObjectByType<GameManager_Level2>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) // ← 2D verzija
+    {
         if (other.CompareTag("Player"))
         {
-            // Javi GameManager-u da je zadatak ispunjen
-            FindFirstObjectByType<GameManager_Level2>().PlayerWentThroughDoor();
-            // Ugasi trigger da se ne aktivira više puta
-            gameObject.SetActive(false);
+            Debug.Log("The player went through the trigger door.");
+            if (gameManager != null)
+            {
+                gameManager.PlayerWentThroughDoor();
+            }
+            else
+            {
+                Debug.LogWarning("GameManager_Level2 not found!");
+            }
         }
     }
 }
-

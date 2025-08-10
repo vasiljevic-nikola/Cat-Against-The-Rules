@@ -10,7 +10,7 @@ public class GameManager_Level2 : MonoBehaviour
     public TMP_Text taskArmchairText;
 
     [Header("Level Objects")]
-    public DoorController door;
+    public DoorController doorwayOpened; // koristi se DoorController skripta
 
     [Header("End Screen UI")]
     public GameObject gameOverScreen;
@@ -32,11 +32,18 @@ public class GameManager_Level2 : MonoBehaviour
     public void CompleteKeyTask()
     {
         keyTaskDone = true;
-        if (door != null)
-        {
-            door.OpenDoor();
-        }
         UpdateUI();
+
+        // Otvaranje vrata
+        if (doorwayOpened != null)
+        {
+            doorwayOpened.OpenDoor();
+        }
+        else
+        {
+            Debug.LogWarning("DoorwayOpened reference is not set in GameManager_Level2!");
+        }
+
         CheckForWin();
     }
 
@@ -56,7 +63,7 @@ public class GameManager_Level2 : MonoBehaviour
 
     void UpdateUI()
     {
-        if (taskKeyText != null) taskKeyText.text = (keyTaskDone ? "(DONE) " : "") + "Place the key on the pillow to open the door.";
+        if (taskKeyText != null) taskKeyText.text = (keyTaskDone ? "(DONE) " : "") + "Place the key on the pillow.";
         if (taskDoorText != null) taskDoorText.text = (doorTaskDone ? "(DONE) " : "") + "Go through the open door.";
         if (taskArmchairText != null) taskArmchairText.text = (armchairTaskFailed ? "(FAILED) " : "") + "Don't touch the armchair.";
     }
