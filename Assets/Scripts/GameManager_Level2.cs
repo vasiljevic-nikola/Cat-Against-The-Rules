@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager_Level2 : MonoBehaviour
 {
@@ -10,11 +11,16 @@ public class GameManager_Level2 : MonoBehaviour
     public TMP_Text taskArmchairText;
 
     [Header("Level Objects")]
-    public DoorController doorwayOpened; // koristi se DoorController skripta
+    public DoorController doorwayOpened;
 
     [Header("End Screen UI")]
     public GameObject gameOverScreen;
     public GameObject levelCompleteScreen;
+
+    [Header("Level Transition")]
+    public string nextLevelName = "Level3";
+    public float nextLevelDelay = 2f;
+    public bool isFinalLevel = false;
 
     private bool keyTaskDone = false;
     private bool doorTaskDone = false;
@@ -28,21 +34,15 @@ public class GameManager_Level2 : MonoBehaviour
         UpdateUI();
     }
 
-    // NOVA FUNKCIJA KOJU POZIVA KLJUČ
     public void CompleteKeyTask()
     {
         keyTaskDone = true;
         UpdateUI();
 
-        // Otvaranje vrata
         if (doorwayOpened != null)
-        {
             doorwayOpened.OpenDoor();
-        }
         else
-        {
             Debug.LogWarning("DoorwayOpened reference is not set in GameManager_Level2!");
-        }
 
         CheckForWin();
     }
@@ -71,22 +71,29 @@ public class GameManager_Level2 : MonoBehaviour
     void CheckForWin()
     {
         if (keyTaskDone && doorTaskDone && !armchairTaskFailed)
-        {
             StartCoroutine(EndGameAfterDelay(true));
-        }
     }
 
     IEnumerator EndGameAfterDelay(bool didWin)
     {
         yield return new WaitForSeconds(0.1f);
+
         if (didWin)
         {
             if (levelCompleteScreen != null) levelCompleteScreen.SetActive(true);
+            StartCoroutine(LoadNextLevelAfterDelay());
         }
         else
         {
             if (gameOverScreen != null) gameOverScreen.SetActive(true);
         }
+
         Time.timeScale = 0f;
+    }
+
+    IEnumerator LoadNextLevelAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(nextLevelDelay);
+        SceneManager.LoadScene("Level 3");
     }
 }

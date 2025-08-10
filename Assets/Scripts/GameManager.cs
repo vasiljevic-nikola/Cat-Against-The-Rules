@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class GameManager : MonoBehaviour
     [Header("End Screen UI")]
     public GameObject gameOverScreen;
     public GameObject levelCompleteScreen;
+
+    [Header("Level Transition")]
+    public string nextLevelName = "Level2";
+    public float nextLevelDelay = 2f;
+    public bool isFinalLevel = false;
 
     private bool bookTaskDone = false;
     private bool lampTaskDone = false;
@@ -28,23 +34,19 @@ public class GameManager : MonoBehaviour
     public void CompleteTask(InteractableObject.ObjectType type)
     {
         if (type == InteractableObject.ObjectType.Book)
-        {
             bookTaskDone = true;
-        }
         else if (type == InteractableObject.ObjectType.Lamp)
-        {
             lampTaskDone = true;
-        }
+
         UpdateUI();
         CheckForWin();
     }
 
     public void GameOver(InteractableObject.ObjectType typeOfFailedObject)
     {
-        if (typeOfFailedObject == InteractableObject.ObjectType.Laptop) // Samo laptop izaziva Game Over
-        {
+        if (typeOfFailedObject == InteractableObject.ObjectType.Laptop)
             laptopTaskFailed = true;
-        }
+
         UpdateUI();
         StartCoroutine(EndGameAfterDelay(false));
     }
@@ -58,10 +60,8 @@ public class GameManager : MonoBehaviour
 
     void CheckForWin()
     {
-        if (bookTaskDone && lampTaskDone && !laptopTaskFailed) // Oba zadatka moraju biti urađena, laptop ne sme biti dodirnut
-        {
+        if (bookTaskDone && lampTaskDone && !laptopTaskFailed)
             StartCoroutine(EndGameAfterDelay(true));
-        }
     }
 
     IEnumerator EndGameAfterDelay(bool didWin)
@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
         if (didWin)
         {
             if (levelCompleteScreen != null) levelCompleteScreen.SetActive(true);
+            StartCoroutine(LoadNextLevelAfterDelay());
         }
         else
         {
@@ -78,5 +79,11 @@ public class GameManager : MonoBehaviour
         }
 
         Time.timeScale = 0f;
+    }
+
+    IEnumerator LoadNextLevelAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(nextLevelDelay);
+        SceneManager.LoadScene("Level 2");
     }
 }
