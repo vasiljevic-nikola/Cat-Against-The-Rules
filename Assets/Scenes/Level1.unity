@@ -448,7 +448,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &353088291
 BoxCollider2D:
@@ -684,7 +684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 412134184}
-  - component: {fileID: 412134183}
+  - component: {fileID: 412134185}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -692,23 +692,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &412134183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 412134182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee6667bbef43854dba751059db8b68d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  taskBooksText: {fileID: 821755759}
-  taskLampText: {fileID: 2068832863}
-  taskLaptopText: {fileID: 529755772}
-  gameOverScreen: {fileID: 520211695}
-  levelCompleteScreen: {fileID: 92447841}
 --- !u!4 &412134184
 Transform:
   m_ObjectHideFlags: 0
@@ -724,6 +707,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &412134185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412134182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d80fcd2b3d7354439376cb6431570f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskBookText: {fileID: 821755759}
+  taskLampText: {fileID: 2068832863}
+  taskLaptopText: {fileID: 529755772}
+  gameOverScreen: {fileID: 520211695}
+  levelCompleteScreen: {fileID: 92447841}
 --- !u!1 &520211695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1111,7 +1111,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &657826027
 BoxCollider2D:
