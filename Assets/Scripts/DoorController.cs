@@ -7,10 +7,10 @@ public class DoorController : MonoBehaviour
     public void OpenDoor()
     {
         Debug.Log("The door is opening!");
-        gameObject.SetActive(false); // Ugasi originalna vrata
+        gameObject.SetActive(false); // Turn off the original door
         if (openedDoorSprite != null)
         {
-            openedDoorSprite.SetActive(true); // Upali crnu rupu
+            openedDoorSprite.SetActive(true); // Turn on door opened status
         }
     }
 

@@ -16,7 +16,7 @@ public class InteractableObject : MonoBehaviour
     }
 
     public ObjectType type;
-    public GameObject dustEffectPrefab; // Prefab za efekat prašine
+    public GameObject dustEffectPrefab;
 
     private GameManager level1Manager;
     private GameManager_Level2 level2Manager;
@@ -26,7 +26,7 @@ public class InteractableObject : MonoBehaviour
 
     void Start()
     {
-        // Pronađi sve GameManagere koji mogu biti aktivni
+        // Find all GameManagers that may be active
         level1Manager = FindFirstObjectByType<GameManager>();
         level2Manager = FindFirstObjectByType<GameManager_Level2>();
         level3Manager = FindFirstObjectByType<GameManager_Level3>();
@@ -42,16 +42,16 @@ public class InteractableObject : MonoBehaviour
         Debug.Log($"{name} collided with {collision.gameObject.name} (tag: {collision.gameObject.tag}) at {Time.time}");
         if (taskCompleted) return;
 
-        // ===== Level 1 =====
+        // Level 1
         if (level1Manager != null)
         {
-            // Laptop -> Game Over (ako igrač udari)
+            // Laptop -> Game Over
             if (type == ObjectType.Laptop && collision.gameObject.CompareTag("Player"))
             {
                 taskCompleted = true;
                 level1Manager.GameOver(ObjectType.Laptop);
             }
-            // Knjiga ili lampa -> CompleteTask (ako padne na pod)
+            // Books/Lamp -> CompleteTask
             else if ((type == ObjectType.Book || type == ObjectType.Lamp) && collision.gameObject.CompareTag("Floor"))
             {
                 SpawnDustEffect();
@@ -61,10 +61,10 @@ public class InteractableObject : MonoBehaviour
             }
         }
 
-        // ===== Level 2 =====
+        // Level 2
         if (level2Manager != null)
         {
-            // Fotelja -> Game Over (ako igrač udari)
+            // ArmChair -> Game Over
             if (type == ObjectType.Armchair && collision.gameObject.CompareTag("Player"))
             {
                 taskCompleted = true;
@@ -72,10 +72,10 @@ public class InteractableObject : MonoBehaviour
             }
         }
 
-        // ===== Level 3 =====
+        // Level 3 
         if (level3Manager != null)
         {
-            // Blender ili aparat za kafu -> CompleteTask (ako padne na pod)
+            // Blender/Coffee machine -> CompleteTask
             if ((type == ObjectType.Blender || type == ObjectType.CoffeeMachine) && collision.gameObject.CompareTag("Floor"))
             {
                 SpawnDustEffect();
@@ -83,7 +83,7 @@ public class InteractableObject : MonoBehaviour
                 taskCompleted = true;
                 level3Manager.CompleteTask(type);
             }
-            // Rerna -> Game Over (ako igrač udari)
+            // Stove -> Game Over
             else if (type == ObjectType.Stove && collision.gameObject.CompareTag("Player"))
             {
                 taskCompleted = true;
@@ -96,7 +96,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (taskCompleted) return;
 
-        // ===== Level 2 - Key Task =====
+        // Level 2 - Key Task
         if (level2Manager != null)
         {
             if (type == ObjectType.Key && other.CompareTag("PillowZone"))
@@ -108,7 +108,7 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    // === Efekat prašine ===
+    // Dust effect
     private void SpawnDustEffect()
     {
         if (dustEffectPrefab != null)

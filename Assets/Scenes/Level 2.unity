@@ -261,6 +261,7 @@ GameObject:
   - component: {fileID: 92447842}
   - component: {fileID: 92447844}
   - component: {fileID: 92447843}
+  - component: {fileID: 92447845}
   m_Layer: 5
   m_Name: LevelComplete_Text
   m_TagString: Untagged
@@ -386,6 +387,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92447841}
   m_CullTransparentMesh: 1
+--- !u!114 &92447845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92447841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b079531f6996e4fb05dd482be2e102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceDuration: 0.5
+  bounceScale: 1.2
 --- !u!1 &110447453
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +771,7 @@ GameObject:
   - component: {fileID: 520211696}
   - component: {fileID: 520211698}
   - component: {fileID: 520211697}
+  - component: {fileID: 520211699}
   m_Layer: 5
   m_Name: ' GameOver_Text'
   m_TagString: Untagged
@@ -881,6 +897,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520211695}
   m_CullTransparentMesh: 1
+--- !u!114 &520211699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520211695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b079531f6996e4fb05dd482be2e102, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceDuration: 0.5
+  bounceScale: 1.2
 --- !u!1 &737427719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1347,6 +1377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  dustEffectPrefab: {fileID: 0}
 --- !u!1 &1142546266
 GameObject:
   m_ObjectHideFlags: 0
@@ -2125,6 +2156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  dustEffectPrefab: {fileID: 0}
 --- !u!1 &1435428927
 GameObject:
   m_ObjectHideFlags: 0
@@ -3078,6 +3110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 5
+  dustEffectPrefab: {fileID: 0}
 --- !u!61 &2127584128
 BoxCollider2D:
   m_ObjectHideFlags: 0
