@@ -509,6 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  dustEffectPrefab: {fileID: 1775901898568202643, guid: 50fed4ac33fe55b47886e10dced7b76d, type: 3}
 --- !u!1 &358339749
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +725,9 @@ MonoBehaviour:
   taskLaptopText: {fileID: 529755772}
   gameOverScreen: {fileID: 520211695}
   levelCompleteScreen: {fileID: 92447841}
+  nextLevelName: Level2
+  nextLevelDelay: 2
+  isFinalLevel: 0
 --- !u!1 &520211695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,6 +1176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  dustEffectPrefab: {fileID: 1775901898568202643, guid: 50fed4ac33fe55b47886e10dced7b76d, type: 3}
 --- !u!1 &737427719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,6 +1651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  dustEffectPrefab: {fileID: 0}
 --- !u!1 &971219680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,6 +1897,7 @@ GameObject:
   - component: {fileID: 1168091469}
   - component: {fileID: 1168091468}
   - component: {fileID: 1168091467}
+  - component: {fileID: 1168091470}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1972,6 +1979,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1168091470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168091466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7176085b5092b4642ba2132408ce1313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1335689612
 GameObject:
   m_ObjectHideFlags: 0
