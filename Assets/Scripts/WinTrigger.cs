@@ -8,19 +8,16 @@ public class WinTrigger : MonoBehaviour
 
     private void Start()
     {
-        // Nađi bilo koji GameManager skriptu u sceni (Level1, Level2, Level3...)
-        gameManager = FindFirstObjectByType<MonoBehaviour>(FindObjectsInactive.Include);
+        // Pronađi baš GameManager skriptu u sceni (može biti Level1, Level2, Level3...)
+        gameManager = FindFirstObjectByType<GameManager>(FindObjectsInactive.Include) as MonoBehaviour ??
+                      FindFirstObjectByType<GameManager_Level2>(FindObjectsInactive.Include) as MonoBehaviour ??
+                      FindFirstObjectByType<GameManager_Level3>(FindObjectsInactive.Include) as MonoBehaviour;
 
         if (gameManager != null)
         {
             // Traži LevelComplete ili PlayerWentThroughDoor
             winMethod = gameManager.GetType().GetMethod("LevelComplete") ??
                         gameManager.GetType().GetMethod("PlayerWentThroughDoor");
-
-            if (winMethod == null)
-            {
-                gameManager = null; // nema ni jednu od metoda
-            }
         }
     }
 
@@ -28,6 +25,7 @@ public class WinTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && gameManager != null && winMethod != null)
         {
+            Debug.Log("Player triggered WinTrigger on " + name);
             winMethod.Invoke(gameManager, null);
         }
     }
