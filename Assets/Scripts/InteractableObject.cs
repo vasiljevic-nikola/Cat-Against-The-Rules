@@ -16,6 +16,7 @@ public class InteractableObject : MonoBehaviour
     }
 
     public ObjectType type;
+    public GameObject dustEffectPrefab; // Prefab za efekat prašine
 
     private GameManager level1Manager;
     private GameManager_Level2 level2Manager;
@@ -38,6 +39,7 @@ public class InteractableObject : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log($"{name} collided with {collision.gameObject.name} (tag: {collision.gameObject.tag}) at {Time.time}");
         if (taskCompleted) return;
 
         // ===== Level 1 =====
@@ -52,6 +54,8 @@ public class InteractableObject : MonoBehaviour
             // Knjiga ili lampa -> CompleteTask (ako padne na pod)
             else if ((type == ObjectType.Book || type == ObjectType.Lamp) && collision.gameObject.CompareTag("Floor"))
             {
+                SpawnDustEffect();
+                StartCoroutine(FindFirstObjectByType<CameraShake>().Shake(0.2f, 0.15f));
                 taskCompleted = true;
                 level1Manager.CompleteTask(type);
             }
@@ -74,6 +78,8 @@ public class InteractableObject : MonoBehaviour
             // Blender ili aparat za kafu -> CompleteTask (ako padne na pod)
             if ((type == ObjectType.Blender || type == ObjectType.CoffeeMachine) && collision.gameObject.CompareTag("Floor"))
             {
+                SpawnDustEffect();
+                StartCoroutine(FindFirstObjectByType<CameraShake>().Shake(0.2f, 0.15f));
                 taskCompleted = true;
                 level3Manager.CompleteTask(type);
             }
@@ -95,9 +101,22 @@ public class InteractableObject : MonoBehaviour
         {
             if (type == ObjectType.Key && other.CompareTag("PillowZone"))
             {
+                StartCoroutine(FindFirstObjectByType<CameraShake>().Shake(0.2f, 0.15f));
                 taskCompleted = true;
                 level2Manager.CompleteKeyTask();
             }
         }
+    }
+
+    // === Efekat prašine ===
+    private void SpawnDustEffect()
+    {
+        if (dustEffectPrefab != null)
+        {
+            Instantiate(dustEffectPrefab, transform.position + Vector3.down * 0.2f, Quaternion.identity);
+            Debug.Log("Dust effect spawned at " + Time.time + " for " + name);
+        }
+        
+
     }
 }

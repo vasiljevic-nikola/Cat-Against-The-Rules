@@ -1117,6 +1117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 6
+  dustEffectPrefab: {fileID: 0}
 --- !u!61 &817717637
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1293,6 +1294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 7
+  dustEffectPrefab: {fileID: 1775901898568202643, guid: 50fed4ac33fe55b47886e10dced7b76d, type: 3}
 --- !u!50 &882524012
 Rigidbody2D:
   serializedVersion: 5
@@ -1740,6 +1742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 8
+  dustEffectPrefab: {fileID: 1775901898568202643, guid: 50fed4ac33fe55b47886e10dced7b76d, type: 3}
 --- !u!50 &1125913716
 Rigidbody2D:
   serializedVersion: 5
@@ -1902,6 +1905,7 @@ GameObject:
   - component: {fileID: 1168091469}
   - component: {fileID: 1168091468}
   - component: {fileID: 1168091467}
+  - component: {fileID: 1168091470}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1983,6 +1987,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1168091470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168091466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7176085b5092b4642ba2132408ce1313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1271097220
 GameObject:
   m_ObjectHideFlags: 0
