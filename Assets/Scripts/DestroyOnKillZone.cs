@@ -6,7 +6,7 @@ public class DestroyOnKillZone : MonoBehaviour
     {
         if (other.CompareTag("KillZone"))
         {
-            // Uništi objekat na kojem je OVA skripta (npr. mačka)
+            // Destroy the object that this script is on (e.g. cat)
             Destroy(gameObject);
         }
     }
